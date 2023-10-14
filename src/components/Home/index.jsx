@@ -17,17 +17,23 @@ export default function Home(){
     const [tempMax, setTempMax] = useState(null)
     const [tempMin, setTempMin] = useState(null)
     const [ description, setDescription ] = useState(null)
+    const [pais, setPais] = useState(null)
+    const [lat, setLat] = useState(null)
+    const [lon, setLon] = useState(null)
   
-  
+    
     const apiKey = '796655c4df4abd5e7bf0947b70dc2912';
     const url = `https://api.openweathermap.org/data/2.5/weather?q=Sao%20Paulo,BR&appid=${apiKey}&units=metric&lang=pt_br`;
-  
+   
+
     useEffect(() => {
       async function fetchData() {
         try {
           const response = await fetch(url);
+            
           if (response.status === 200) {
             const data = await response.json();
+   
             setTemperatura(data.main.temp);
             setCidade(data.name);
             setNuvem(data.clouds.all)
@@ -36,8 +42,10 @@ export default function Home(){
             setTempMax(data.main.temp_max)
             setTempMin(data.main.temp_min)
             setDescription(data.weather[0].description)
+            setPais(data.sys.country)
          
             console.log(data)
+
           } else {
             console.log('Erro na API');
           }
@@ -52,22 +60,24 @@ export default function Home(){
         try{
           let apiKey = '796655c4df4abd5e7bf0947b70dc2912'
           let url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(input)}&appid=${apiKey}&units=metric&lang=pt_br`
-  
+          let url2 = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${apiKey}`
           let response =  await fetch(url)
-              if(response.status === 200){
-  
+             if(response.status === 200){   
                   const data = await response.json()
-                  setTemperatura(data.main.temp);
-                  setCidade(data.name)
-                  setNuvem(data.clouds.all)
-                  setVento(data.wind.speed)
-                  setUmidade(data.main.humidity)
-                  setTempMax(data.main.temp_max)
-                  setTempMin(data.main.temp_min)
-                  setDescription(data.weather[0].description)
-              
-                  toast.success('cidade encontrada')
-                  
+                          setTemperatura(data.main.temp);
+                          setCidade(data.name)
+                          setNuvem(data.clouds.all)
+                          setVento(data.wind.speed)
+                          setUmidade(data.main.humidity)
+                          setTempMax(data.main.temp_max)
+                          setTempMin(data.main.temp_min)
+                          setDescription(data.weather[0].description)
+                          setPais(data.sys.country);
+                          setLat(data.coord.lat);
+                          setLon(data.coord.lon)
+                          toast.success('cidade encontrada')
+                          console.log(data)
+                                    
               } else {
                 toast.warn('cidade não existe')
               }
@@ -78,10 +88,14 @@ export default function Home(){
         
     }
 
+  let pressEnter = (e) => e.key === 'Enter' && pesquisa()
+  
+
 return(
+
     <div id='container'>
     <div id='inputs'>
-    <input className='input' placeholder='Digite o nome' value={input} onChange={(e) => setInput(e.target.value)}></input>
+    <input className='input' placeholder='Digite o nome' onKeyDown={pressEnter} value={input} onChange={(e) => setInput(e.target.value)}></input>
     <button onClick={pesquisa}>Pesquisar</button>
     </div>
     <div className='painel'>
@@ -91,7 +105,7 @@ return(
               <h2>Agora</h2>
               <h1 className='temperatura'>{temperatura}</h1>
               <h2 className='cidade'>{cidade}</h2> 
-          
+              <h3 className='pais'>{pais}</h3>
           </div>
         
           <div className='conteudo-center'>
