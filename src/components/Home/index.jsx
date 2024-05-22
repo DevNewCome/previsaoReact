@@ -94,15 +94,12 @@ export default function Home(){
 return(
 
     <div id='container'>
-    <div id='inputs'>
-    <input className='input' placeholder='Digite o nome' onKeyDown={pressEnter} value={input} onChange={(e) => setInput(e.target.value)}></input>
-    <button onClick={pesquisa}>Pesquisar</button>
-    </div>
+
     <div className='painel'>
    
       <div className='painel-superior'>
           <div className='conteudo-left'>
-              <h2>Agora</h2>
+              <h2>Now</h2>
               <h1 className='temperatura'>{temperatura}</h1>
               <h2 className='cidade'>{cidade}</h2> 
               <h3 className='pais'>{pais}</h3>
@@ -139,7 +136,7 @@ return(
           </div>
           <div className='conteudo-right'>
               <div className='right-topo'>
-                <h1>Hoje</h1>
+                <h1>Today</h1>
                 <img src="" alt="" />
               </div>
               <div className='description'>
@@ -159,6 +156,10 @@ return(
       </div>
       <div className='painel-inferior'>
       </div>
+    </div>
+    <div id='inputs'>
+    <input className='input' placeholder='Digite o nome' onKeyDown={pressEnter} value={input} onChange={(e) => setInput(e.target.value)}></input>
+    <button onClick={pesquisa}>Search</button>
     </div>
   </div>
 ) 

@@ -3,6 +3,8 @@ body {
   box-sizing: border-box;
   padding: 0;
   font-family: 'Times New Roman', Times, serif;
+  background-color: rgb(188, 202, 230);
+
 }
 
 code {
